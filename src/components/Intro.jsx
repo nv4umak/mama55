@@ -51,7 +51,7 @@ export default function Intro({ onStart }) {
       )}
 
       <div className="intro-content">
-        <img src="/intro.png" className="intro-image" alt="" aria-hidden="true" />
+        <img src={`${import.meta.env.BASE_URL}intro.png`} className="intro-image" alt="" aria-hidden="true" />
         <h1 className="intro-title">С&nbsp;Юбилеем, любимая мама и&nbsp;бабушка!</h1>
         <p className="intro-body">
           Твои Чумаки тебе приготовили<br />небольшой сюрприз!<br />

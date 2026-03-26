@@ -15,8 +15,13 @@ export default function Card({ enabled, onFlip }) {
   const [charCount, setCharCount] = useState(0)
 
   useEffect(() => {
-    if (!flipped) { setCharCount(0); return }
-    if (charCount >= TOTAL_CHARS) return
+    if (flipped) return
+    const t = setTimeout(() => setCharCount(0), 0)
+    return () => clearTimeout(t)
+  }, [flipped])
+
+  useEffect(() => {
+    if (!flipped || charCount >= TOTAL_CHARS) return
     const t = setTimeout(() => setCharCount(c => c + 1), CHAR_DELAY)
     return () => clearTimeout(t)
   }, [flipped, charCount])
@@ -31,14 +36,11 @@ export default function Card({ enabled, onFlip }) {
   const isDone = charCount >= TOTAL_CHARS
 
   // Distribute charCount across paragraphs
-  const paras = (() => {
-    let rem = charCount
-    return PARAGRAPHS.map(text => {
-      const vis = Math.min(rem, text.length)
-      rem = Math.max(0, rem - text.length)
-      return { text, vis }
-    })
-  })()
+  const paras = PARAGRAPHS.reduce((acc, text) => {
+    const used = acc.reduce((s, p) => s + p.vis, 0)
+    const vis = Math.min(Math.max(0, charCount - used), text.length)
+    return [...acc, { text, vis }]
+  }, [])
 
   // First paragraph still being typed
   const activeIdx = paras.findIndex(({ text, vis }) => vis < text.length)
