@@ -1,7 +1,8 @@
 /* ===== 3D scene ===== */
 .card-scene {
-  width: 100%;
+  width: min(100%, calc((80dvh - 40px) * 3 / 4));
   aspect-ratio: 3 / 4;
+  margin: 0 auto;
   perspective: 900px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;

@@ -58,7 +58,7 @@ export default function Card({ enabled, onFlip }) {
 
         {/* Front: photo */}
         <div className="card-face card-face--front">
-          <img src="/card.png" alt="С Юбилеем!" className="card-photo" />
+          <img src={`${import.meta.env.BASE_URL}card.png`} alt="С Юбилеем!" className="card-photo" />
         </div>
 
         {/* Back: greeting text */}
