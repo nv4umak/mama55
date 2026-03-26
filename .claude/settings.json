@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "/Users/n4umak/Yandex.Disk.localized/Pet-projects/mome 55/src"
+    ],
+    "allow": [
+      "Bash(npm run:*)"
+    ]
+  }
+}

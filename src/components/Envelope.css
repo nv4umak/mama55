@@ -1,0 +1,207 @@
+/* ===== Scene (100dvh, flex column) ===== */
+.env-scene {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  /* Palette from the card photo: warm champagne */
+  background: linear-gradient(180deg, #faf2e8 0%, #f2ddd0 100%);
+  overflow: hidden;
+}
+
+/* ===== Background pattern ===== */
+.bg-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Top 80% — stage ===== */
+.env-stage {
+  flex: 0 0 80dvh;
+  height: 80dvh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2vh;
+  overflow: visible;
+}
+
+/* ===== Bottom 20% — hint zone ===== */
+.env-hint-area {
+  flex: 0 0 20dvh;
+  height: 20dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.env-hint {
+  font-size: 18px;
+  font-style: normal;
+  color: rgba(160, 80, 70, 0.7);
+  letter-spacing: 0.3px;
+  text-align: center;
+  margin: 0;
+  animation: hintPulse 2.2s ease-in-out infinite;
+}
+
+/* Only pulse when there's actual text (not &nbsp;) */
+.env-scene--risen .env-hint {
+  animation: none;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ===== Card wrapper (full-width, centered in stage) ===== */
+.env-card-wrap {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 50%;
+  transform: translateY(calc(-50% + 90dvh));
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition:
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.08s,
+    opacity   0.5s ease                            0.08s;
+}
+
+.env-scene--risen .env-card-wrap {
+  transform: translateY(-50%);
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* ===== Whole-scene exit ===== */
+.env-scene--exiting {
+  animation: envSceneOut 0.55s ease forwards;
+}
+
+@keyframes envSceneOut {
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* ===== Envelope wrapper ===== */
+.env-wrap {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: transform 0.15s ease;
+}
+
+.env-wrap:active {
+  transform: scale(0.97);
+}
+
+/* Envelope doesn't intercept taps once open */
+.env-wrap--open {
+  pointer-events: none;
+}
+
+/* Envelope fades away after card rises */
+.env-wrap--hidden {
+  opacity: 0;
+  transform: scale(0.85) translateY(24px);
+  pointer-events: none;
+  cursor: default;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* ===== "Дальше" button ===== */
+.env-next-btn {
+  font-style: normal;
+  background: linear-gradient(135deg, #c87878 0%, #aa5858 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 36px;
+  font-size: 15px;
+  font-family: inherit;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(170, 80, 70, 0.38);
+  -webkit-tap-highlight-color: transparent;
+  animation: envBtnIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transition: transform 0.15s ease;
+}
+
+.env-next-btn:active { transform: scale(0.96); }
+
+@keyframes envBtnIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ===== Envelope body ===== */
+.env-body {
+  position: relative;
+  width: 280px;
+  height: 200px;
+  /* Blush/dusty-rose palette from the photo */
+  background: #dba090;
+  border-radius: 14px;
+  box-shadow:
+    0 14px 36px rgba(140, 60, 60, 0.28),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+  perspective: 600px;
+}
+
+/* ===== Fold triangles ===== */
+.env-fold {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.env-fold--bottom {
+  clip-path: polygon(0% 100%, 100% 100%, 50% 50%);
+  background: #c07868;
+}
+
+.env-fold--left {
+  clip-path: polygon(0% 0%, 0% 100%, 50% 50%);
+  background: #e8b8a4;
+}
+
+.env-fold--right {
+  clip-path: polygon(100% 0%, 100% 100%, 50% 50%);
+  background: #cc9080;
+}
+
+/* ===== Animated top flap ===== */
+.env-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  /* Peach tone from the floral background of the photo */
+  background: linear-gradient(160deg, #e8c4a8 0%, #ddb090 100%);
+  border-radius: 14px 14px 0 0;
+  transform-origin: top center;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 4;
+}
+
+.env-scene--opening .env-flap,
+.env-scene--risen .env-flap {
+  transform: rotateX(-180deg);
+}

@@ -1,0 +1,56 @@
+.final-scene {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  animation: finalIn 1.2s ease forwards;
+}
+
+@keyframes finalIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.final-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.final-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 24px 52px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 100%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.final-caption__line {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 55px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  line-height: 1.15;
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.9),
+    0 4px 20px rgba(0, 0, 0, 0.8),
+    0 8px 40px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.final-caption__line--1 { animation: finalLineIn 0.7s ease 1.0s forwards; }
+.final-caption__line--2 { animation: finalLineIn 0.7s ease 1.4s forwards; }
+
+@keyframes finalLineIn {
+  to { opacity: 1; transform: translateY(0); }
+}
